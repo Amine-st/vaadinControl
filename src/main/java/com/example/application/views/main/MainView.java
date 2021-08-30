@@ -1,32 +1,39 @@
-package com.example.application.views;
+package com.example.application.views.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentUtil;
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.PageTitle;
-import com.example.application.views.MainLayout;
-import com.example.application.views.helloworld.HelloWorldView;
-import com.example.application.views.about.AboutView;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.component.avatar.Avatar;
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.Optional;
+
+        import com.example.application.views.attendance.AttendanceView;
+        import com.example.application.views.device.DeviceView;
+        import com.example.application.views.deviceConnection.DeviceConnectionView;
+        import com.example.application.views.sync.SyncView;
+        import com.example.application.views.test.TestView;
+        import com.example.application.views.timeZone.TimeZoneView;
+        import com.example.application.views.user.UserView;
+        import com.vaadin.flow.component.Component;
+        import com.vaadin.flow.component.ComponentUtil;
+        import com.vaadin.flow.component.Text;
+        import com.vaadin.flow.component.applayout.AppLayout;
+        import com.vaadin.flow.component.applayout.DrawerToggle;
+        import com.vaadin.flow.component.button.Button;
+        import com.vaadin.flow.component.html.Anchor;
+        import com.vaadin.flow.component.html.Image;
+        import com.vaadin.flow.component.html.Span;
+        import com.vaadin.flow.component.html.H1;
+        import com.vaadin.flow.component.orderedlayout.FlexComponent;
+        import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+        import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+        import com.vaadin.flow.component.tabs.Tab;
+        import com.vaadin.flow.component.tabs.Tabs;
+        import com.vaadin.flow.component.tabs.TabsVariant;
+        import com.vaadin.flow.router.RouterLink;
+        import com.vaadin.flow.router.Route;
+        import com.vaadin.flow.router.PageTitle;
+        import com.vaadin.flow.server.PWA;
+        import com.vaadin.flow.theme.Theme;
+        import com.vaadin.flow.component.avatar.Avatar;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -34,7 +41,7 @@ import com.vaadin.flow.component.avatar.Avatar;
 @PWA(name = "My App", shortName = "My App", enableInstallPrompt = false)
 @Theme(themeFolder = "myapp")
 @PageTitle("Main")
-public class MainLayout extends AppLayout {
+public class MainView extends AppLayout {
 
     public static class MenuItemInfo {
 
@@ -65,7 +72,7 @@ public class MainLayout extends AppLayout {
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainLayout() {
+    public MainView() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -86,7 +93,8 @@ public class MainLayout extends AppLayout {
         Avatar avatar = new Avatar();
         avatar.addClassNames("ms-auto", "me-m");
         layout.add(avatar);
-
+        Anchor logout = new Anchor("logout", "Log out");
+        layout.add(logout);
         return layout;
     }
 
@@ -104,6 +112,8 @@ public class MainLayout extends AppLayout {
         logoLayout.add(new Image("images/logo.png", "My App logo"));
         logoLayout.add(new H1("My App"));
         layout.add(logoLayout, menu);
+
+
         return layout;
     }
 
@@ -119,17 +129,19 @@ public class MainLayout extends AppLayout {
     }
 
     private List<Tab> createMenuItems() {
-        MenuItemInfo[] menuItems = new MenuItemInfo[]{ //
-                new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
 
-                new MenuItemInfo("About", "la la-file", AboutView.class), //
-
-        };
         List<Tab> tabs = new ArrayList<>();
-        for (MenuItemInfo menuItemInfo : menuItems) {
-            tabs.add(createTab(menuItemInfo));
 
-        }
+        tabs.add(createTab(new MenuItemInfo("Test", "la la-globe", TestView.class)));
+
+            tabs.add(createTab(new MenuItemInfo("Connect to device", "la la-globe", DeviceConnectionView.class)));
+            tabs.add(createTab(new MenuItemInfo("Attendance", "la la-globe", AttendanceView.class)));
+            tabs.add(createTab(new MenuItemInfo("User", "la la-globe", UserView.class)));
+            tabs.add(createTab(new MenuItemInfo("Time zone", "la la-globe", TimeZoneView.class)));
+            tabs.add(createTab(new MenuItemInfo("Device info", "la la-globe", DeviceView.class)));
+            tabs.add(createTab(new MenuItemInfo("Syncronisation", "la la-globe", SyncView.class)));
+
+
         return tabs;
     }
 
